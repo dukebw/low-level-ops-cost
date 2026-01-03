@@ -72,11 +72,19 @@ def main() -> int:
         _run(cmd, dry_run=args.dry_run)
 
     if args.preview:
-        if args.dry_run:
-            print("DRY RUN: preview server would start at http://localhost:8000")
+        if args.skip_site_sync:
+            preview_root = dist
+            preview_path = "/"
         else:
-            print("Preview: http://localhost:8000")
-            subprocess.run(["python3", "-m", "http.server", "8000"], check=True, cwd=dist)
+            preview_root = site_root.parent
+            preview_path = f"/{site_root.name}/"
+
+        preview_url = f"http://localhost:8000{preview_path}"
+        if args.dry_run:
+            print(f"DRY RUN: preview server would start at {preview_url}")
+        else:
+            print(f"Preview: {preview_url}")
+            subprocess.run(["python3", "-m", "http.server", "8000"], check=True, cwd=preview_root)
 
     print("Done.")
     return 0
