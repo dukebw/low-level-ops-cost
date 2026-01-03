@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Low-Level Ops Cost</title>
+    <meta name="description" content="Latency, throughput, and storage for low-level ops across CPUs and accelerators." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero reveal" style="--delay: 80ms">
+        <h1>Low-level ops cost</h1>
+        <p>
+          Latency, throughput, and storage for micro-ops on accelerators and CPUs. Every datapoint
+          includes a verification recipe.
+        </p>
+        <div class="hero-meta">
+          <div>
+            <span class="meta-label">Scope</span>
+            <span class="meta-value">GPUs + CPUs</span>
+          </div>
+          <div>
+            <span class="meta-label">First device</span>
+            <span class="meta-value">NVIDIA B200</span>
+          </div>
+          <div>
+            <span class="meta-label">Last updated</span>
+            <span class="meta-value" id="updatedAt">—</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="alert reveal" style="--delay: 140ms" id="dataBanner">
+        <strong>Seed dataset:</strong> values in this prototype are placeholders to validate layout and
+        filtering. Replace with measured numbers + recipes as they become available.
+      </section>
+
+      <section class="stats-grid reveal" style="--delay: 200ms">
+        <div class="stat-card">
+          <div class="stat-label">Devices</div>
+          <div class="stat-value" id="statDevices">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Ops</div>
+          <div class="stat-value" id="statOps">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Measurements</div>
+          <div class="stat-value" id="statMeasurements">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Metric families</div>
+          <div class="stat-value">Latency · Throughput · Storage</div>
+        </div>
+      </section>
+
+      <section class="panel reveal" style="--delay: 260ms">
+        <div class="panel-header">
+          <div>
+            <h2>Explore measurements</h2>
+            <p>Select a metric family and op. Compare across devices and dive into recipes.</p>
+          </div>
+        </div>
+        <div class="controls">
+          <div class="control-group">
+            <label class="control-label">Metric family</label>
+            <div class="segmented" id="metricFamily">
+              <button data-value="latency" class="active">Latency</button>
+              <button data-value="throughput">Throughput</button>
+              <button data-value="storage">Storage</button>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Op class</label>
+            <select id="opClass">
+              <option value="all">All</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Op</label>
+            <select id="opSelect"></select>
+          </div>
+          <div class="control-group">
+            <label class="control-label">Devices</label>
+            <div class="device-list" id="deviceList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel reveal" style="--delay: 320ms">
+        <div class="panel-header">
+          <div>
+            <h2>Comparative view</h2>
+            <p id="chartSubtitle">Select an op to visualize results across devices.</p>
+          </div>
+          <div class="pill" id="unitPill">—</div>
+        </div>
+        <div class="chart" id="chart"></div>
+        <div class="chart-empty" id="chartEmpty" hidden>No data for this selection yet.</div>
+      </section>
+
+      <section class="panel reveal" style="--delay: 380ms">
+        <div class="panel-header">
+          <div>
+            <h2>Measurement recipes</h2>
+            <p>Each datapoint includes a reproducible microbenchmark recipe.</p>
+          </div>
+        </div>
+        <div class="measurement-list" id="measurementList"></div>
+      </section>
+
+      <footer class="footer reveal" style="--delay: 440ms">
+        <div>
+          Built for rapid iteration. Add new devices or ops by editing
+          <span class="code">data/metrics.json</span>.
+        </div>
+      </footer>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

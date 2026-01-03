@@ -1,0 +1,582 @@
+{
+  "schema_version": "0.3",
+  "updated_at": "2026-01-03",
+  "devices": [
+    {
+      "id": "nvidia-b200-sxm",
+      "name": "NVIDIA Blackwell B200 (SXM)",
+      "vendor": "NVIDIA",
+      "type": "accelerator",
+      "architecture": "Blackwell",
+      "release_year": 2024,
+      "memory": {
+        "hbm_type": "HBM3e",
+        "hbm_size_gb": null,
+        "hbm_bandwidth_gbs": null,
+        "l2_size_mb": null,
+        "sm_shared_mem_kb": null
+      },
+      "interconnect": ["NVLink"],
+      "notes": ""
+    },
+    {
+      "id": "cpu-placeholder-x86",
+      "name": "CPU (placeholder x86_64)",
+      "vendor": "TODO",
+      "type": "cpu",
+      "architecture": "TODO",
+      "release_year": null,
+      "memory": {
+        "dram_type": "DDR5",
+        "dram_bandwidth_gbs": null,
+        "l1_size_kb": null,
+        "l2_size_kb": null,
+        "l3_size_mb": null
+      },
+      "notes": ""
+    }
+  ],
+  "ops": [
+    {
+      "id": "gpu.smem.ld",
+      "name": "Shared memory load",
+      "platform": "gpu",
+      "class": "memory",
+      "space": "shared",
+      "direction": "load",
+      "width_bits": 32,
+      "notes": ""
+    },
+    {
+      "id": "gpu.smem.st",
+      "name": "Shared memory store",
+      "platform": "gpu",
+      "class": "memory",
+      "space": "shared",
+      "direction": "store",
+      "width_bits": 32,
+      "notes": ""
+    },
+    {
+      "id": "gpu.gmem.ld",
+      "name": "Global memory load",
+      "platform": "gpu",
+      "class": "memory",
+      "space": "global",
+      "direction": "load",
+      "width_bits": 32,
+      "notes": ""
+    },
+    {
+      "id": "gpu.gmem.st",
+      "name": "Global memory store",
+      "platform": "gpu",
+      "class": "memory",
+      "space": "global",
+      "direction": "store",
+      "width_bits": 32,
+      "notes": ""
+    },
+    {
+      "id": "gpu.cmem.ld",
+      "name": "Constant memory load",
+      "platform": "gpu",
+      "class": "memory",
+      "space": "constant",
+      "direction": "load",
+      "width_bits": 32,
+      "notes": ""
+    },
+    {
+      "id": "gpu.tcgen05.mma",
+      "name": "Tensor Core MMA (tcgen05.mma)",
+      "platform": "gpu",
+      "class": "tensorcore",
+      "precision": "bf16",
+      "shape": "m16n16k16",
+      "notes": ""
+    },
+    {
+      "id": "gpu.smem.capacity",
+      "name": "Shared memory capacity",
+      "platform": "gpu",
+      "class": "capacity",
+      "space": "shared",
+      "notes": ""
+    },
+    {
+      "id": "cpu.l1.ld",
+      "name": "L1 cache load",
+      "platform": "cpu",
+      "class": "memory",
+      "space": "l1",
+      "direction": "load",
+      "width_bits": 64,
+      "notes": ""
+    },
+    {
+      "id": "cpu.l1.st",
+      "name": "L1 cache store",
+      "platform": "cpu",
+      "class": "memory",
+      "space": "l1",
+      "direction": "store",
+      "width_bits": 64,
+      "notes": ""
+    },
+    {
+      "id": "cpu.l2.ld",
+      "name": "L2 cache load",
+      "platform": "cpu",
+      "class": "memory",
+      "space": "l2",
+      "direction": "load",
+      "width_bits": 64,
+      "notes": ""
+    },
+    {
+      "id": "cpu.l3.ld",
+      "name": "L3 cache load",
+      "platform": "cpu",
+      "class": "memory",
+      "space": "l3",
+      "direction": "load",
+      "width_bits": 64,
+      "notes": ""
+    },
+    {
+      "id": "cpu.dram.ld",
+      "name": "DRAM load",
+      "platform": "cpu",
+      "class": "memory",
+      "space": "dram",
+      "direction": "load",
+      "width_bits": 64,
+      "notes": ""
+    },
+    {
+      "id": "cpu.dram.st",
+      "name": "DRAM store",
+      "platform": "cpu",
+      "class": "memory",
+      "space": "dram",
+      "direction": "store",
+      "width_bits": 64,
+      "notes": ""
+    },
+    {
+      "id": "cpu.l1.capacity",
+      "name": "L1 cache capacity",
+      "platform": "cpu",
+      "class": "capacity",
+      "space": "l1",
+      "notes": ""
+    },
+    {
+      "id": "cpu.l2.capacity",
+      "name": "L2 cache capacity",
+      "platform": "cpu",
+      "class": "capacity",
+      "space": "l2",
+      "notes": ""
+    },
+    {
+      "id": "cpu.l3.capacity",
+      "name": "L3 cache capacity",
+      "platform": "cpu",
+      "class": "capacity",
+      "space": "l3",
+      "notes": ""
+    }
+  ],
+  "measurements": [
+    {
+      "id": "b200-smem-ld-lat-p50",
+      "device_id": "nvidia-b200-sxm",
+      "op_id": "gpu.smem.ld",
+      "metric_family": "latency",
+      "value": 18,
+      "unit": "cycles",
+      "aggregation": "p50",
+      "higher_is_better": false,
+      "conditions": {
+        "clock_mhz": 1980,
+        "access_pattern": "coalesced",
+        "stride_bytes": 4
+      },
+      "measured_at": "2026-01-03",
+      "tags": ["microbench", "smem"],
+      "recipe": {
+        "summary": "PTX microbenchmark for shared memory load latency",
+        "steps": [
+          {
+            "type": "command",
+            "run": "TODO: ./bench_smem --op=ld --stride=4 --iters=1e6",
+            "expected": "Latency reported in cycles"
+          },
+          {
+            "type": "validation",
+            "run": "TODO: ncu --metrics sm__sass_average_branch_targets_threads...",
+            "expected": "Matches within 5%"
+          }
+        ],
+        "notes": "Placeholder values until measured on hardware."
+      },
+      "source": {
+        "kind": "placeholder",
+        "reference": "",
+        "confidence": "placeholder"
+      }
+    },
+    {
+      "id": "b200-gmem-ld-lat-p50",
+      "device_id": "nvidia-b200-sxm",
+      "op_id": "gpu.gmem.ld",
+      "metric_family": "latency",
+      "value": 420,
+      "unit": "cycles",
+      "aggregation": "p50",
+      "higher_is_better": false,
+      "conditions": {
+        "clock_mhz": 1980,
+        "access_pattern": "coalesced",
+        "stride_bytes": 32
+      },
+      "measured_at": "2026-01-03",
+      "tags": ["microbench", "gmem"],
+      "recipe": {
+        "summary": "Global memory load latency (pointer chase)",
+        "steps": [
+          {
+            "type": "command",
+            "run": "TODO: ./bench_gmem --op=ld --pattern=pointer",
+            "expected": "Latency reported in cycles"
+          }
+        ],
+        "notes": "Placeholder values until measured on hardware."
+      },
+      "source": {
+        "kind": "placeholder",
+        "reference": "",
+        "confidence": "placeholder"
+      }
+    },
+    {
+      "id": "b200-gmem-ld-tput",
+      "device_id": "nvidia-b200-sxm",
+      "op_id": "gpu.gmem.ld",
+      "metric_family": "throughput",
+      "value": 3100,
+      "unit": "GB/s",
+      "aggregation": "p50",
+      "higher_is_better": true,
+      "conditions": {
+        "clock_mhz": 1980,
+        "access_pattern": "streaming",
+        "stride_bytes": 128
+      },
+      "measured_at": "2026-01-03",
+      "tags": ["microbench", "gmem"],
+      "recipe": {
+        "summary": "Global memory load bandwidth",
+        "steps": [
+          {
+            "type": "command",
+            "run": "TODO: ./bench_gmem --op=ld --pattern=stream",
+            "expected": "Bandwidth in GB/s"
+          }
+        ],
+        "notes": "Placeholder values until measured on hardware."
+      },
+      "source": {
+        "kind": "placeholder",
+        "reference": "",
+        "confidence": "placeholder"
+      }
+    },
+    {
+      "id": "b200-tcgen05-mma-tput",
+      "device_id": "nvidia-b200-sxm",
+      "op_id": "gpu.tcgen05.mma",
+      "metric_family": "throughput",
+      "value": 1000,
+      "unit": "TFLOP/s",
+      "aggregation": "p50",
+      "higher_is_better": true,
+      "conditions": {
+        "precision": "bf16",
+        "shape": "m16n16k16",
+        "clock_mhz": 1980
+      },
+      "measured_at": "2026-01-03",
+      "tags": ["tensorcore"],
+      "recipe": {
+        "summary": "Tensor core MMA throughput microbenchmark",
+        "steps": [
+          {
+            "type": "command",
+            "run": "TODO: ./bench_tcgen05 --shape=m16n16k16 --dtype=bf16",
+            "expected": "Throughput in TFLOP/s"
+          }
+        ],
+        "notes": "Placeholder values until measured on hardware."
+      },
+      "source": {
+        "kind": "placeholder",
+        "reference": "",
+        "confidence": "placeholder"
+      }
+    },
+    {
+      "id": "b200-smem-capacity",
+      "device_id": "nvidia-b200-sxm",
+      "op_id": "gpu.smem.capacity",
+      "metric_family": "storage",
+      "value": 256,
+      "unit": "KB",
+      "higher_is_better": true,
+      "conditions": {
+        "scope": "per-SM"
+      },
+      "measured_at": "2026-01-03",
+      "tags": ["smem"],
+      "recipe": {
+        "summary": "Query per-SM shared memory capacity",
+        "steps": [
+          {
+            "type": "command",
+            "run": "TODO: deviceQuery --field sharedMemPerSM",
+            "expected": "Shared memory size reported"
+          }
+        ],
+        "notes": "Placeholder values until measured on hardware."
+      },
+      "source": {
+        "kind": "placeholder",
+        "reference": "",
+        "confidence": "placeholder"
+      }
+    },
+    {
+      "id": "cpu-l1-ld-lat-p50",
+      "device_id": "cpu-placeholder-x86",
+      "op_id": "cpu.l1.ld",
+      "metric_family": "latency",
+      "value": 4,
+      "unit": "cycles",
+      "aggregation": "p50",
+      "higher_is_better": false,
+      "conditions": {
+        "clock_mhz": 3200,
+        "access_pattern": "stride-1",
+        "prefetch": "on"
+      },
+      "measured_at": "2026-01-03",
+      "tags": ["microbench", "l1"],
+      "recipe": {
+        "summary": "Pointer-chase L1 latency microbenchmark",
+        "steps": [
+          {
+            "type": "command",
+            "run": "TODO: ./bench_cache --level=l1 --pattern=pointer",
+            "expected": "Latency reported in cycles"
+          }
+        ],
+        "notes": "Placeholder values until measured on hardware."
+      },
+      "source": {
+        "kind": "placeholder",
+        "reference": "",
+        "confidence": "placeholder"
+      }
+    },
+    {
+      "id": "cpu-l3-ld-lat-p50",
+      "device_id": "cpu-placeholder-x86",
+      "op_id": "cpu.l3.ld",
+      "metric_family": "latency",
+      "value": 38,
+      "unit": "cycles",
+      "aggregation": "p50",
+      "higher_is_better": false,
+      "conditions": {
+        "clock_mhz": 3200,
+        "access_pattern": "stride-1",
+        "prefetch": "on"
+      },
+      "measured_at": "2026-01-03",
+      "tags": ["microbench", "l3"],
+      "recipe": {
+        "summary": "Pointer-chase L3 latency microbenchmark",
+        "steps": [
+          {
+            "type": "command",
+            "run": "TODO: ./bench_cache --level=l3 --pattern=pointer",
+            "expected": "Latency reported in cycles"
+          }
+        ],
+        "notes": "Placeholder values until measured on hardware."
+      },
+      "source": {
+        "kind": "placeholder",
+        "reference": "",
+        "confidence": "placeholder"
+      }
+    },
+    {
+      "id": "cpu-dram-ld-lat-p50",
+      "device_id": "cpu-placeholder-x86",
+      "op_id": "cpu.dram.ld",
+      "metric_family": "latency",
+      "value": 220,
+      "unit": "cycles",
+      "aggregation": "p50",
+      "higher_is_better": false,
+      "conditions": {
+        "clock_mhz": 3200,
+        "access_pattern": "stride-1",
+        "prefetch": "on"
+      },
+      "measured_at": "2026-01-03",
+      "tags": ["microbench", "dram"],
+      "recipe": {
+        "summary": "DRAM latency microbenchmark",
+        "steps": [
+          {
+            "type": "command",
+            "run": "TODO: ./bench_cache --level=dram --pattern=pointer",
+            "expected": "Latency reported in cycles"
+          }
+        ],
+        "notes": "Placeholder values until measured on hardware."
+      },
+      "source": {
+        "kind": "placeholder",
+        "reference": "",
+        "confidence": "placeholder"
+      }
+    },
+    {
+      "id": "cpu-dram-ld-tput",
+      "device_id": "cpu-placeholder-x86",
+      "op_id": "cpu.dram.ld",
+      "metric_family": "throughput",
+      "value": 200,
+      "unit": "GB/s",
+      "aggregation": "p50",
+      "higher_is_better": true,
+      "conditions": {
+        "access_pattern": "streaming",
+        "threads": 64
+      },
+      "measured_at": "2026-01-03",
+      "tags": ["microbench", "dram"],
+      "recipe": {
+        "summary": "DRAM read bandwidth",
+        "steps": [
+          {
+            "type": "command",
+            "run": "TODO: ./bench_bw --op=read --threads=64",
+            "expected": "Bandwidth in GB/s"
+          }
+        ],
+        "notes": "Placeholder values until measured on hardware."
+      },
+      "source": {
+        "kind": "placeholder",
+        "reference": "",
+        "confidence": "placeholder"
+      }
+    },
+    {
+      "id": "cpu-l1-capacity",
+      "device_id": "cpu-placeholder-x86",
+      "op_id": "cpu.l1.capacity",
+      "metric_family": "storage",
+      "value": 64,
+      "unit": "KB",
+      "higher_is_better": true,
+      "conditions": {
+        "scope": "per-core"
+      },
+      "measured_at": "2026-01-03",
+      "tags": ["cache"],
+      "recipe": {
+        "summary": "Query L1 cache capacity",
+        "steps": [
+          {
+            "type": "command",
+            "run": "TODO: lscpu | grep -i 'L1d'",
+            "expected": "L1 size reported"
+          }
+        ],
+        "notes": "Placeholder values until measured on hardware."
+      },
+      "source": {
+        "kind": "placeholder",
+        "reference": "",
+        "confidence": "placeholder"
+      }
+    },
+    {
+      "id": "cpu-l2-capacity",
+      "device_id": "cpu-placeholder-x86",
+      "op_id": "cpu.l2.capacity",
+      "metric_family": "storage",
+      "value": 1024,
+      "unit": "KB",
+      "higher_is_better": true,
+      "conditions": {
+        "scope": "per-core"
+      },
+      "measured_at": "2026-01-03",
+      "tags": ["cache"],
+      "recipe": {
+        "summary": "Query L2 cache capacity",
+        "steps": [
+          {
+            "type": "command",
+            "run": "TODO: lscpu | grep -i 'L2'",
+            "expected": "L2 size reported"
+          }
+        ],
+        "notes": "Placeholder values until measured on hardware."
+      },
+      "source": {
+        "kind": "placeholder",
+        "reference": "",
+        "confidence": "placeholder"
+      }
+    },
+    {
+      "id": "cpu-l3-capacity",
+      "device_id": "cpu-placeholder-x86",
+      "op_id": "cpu.l3.capacity",
+      "metric_family": "storage",
+      "value": 64,
+      "unit": "MB",
+      "higher_is_better": true,
+      "conditions": {
+        "scope": "shared"
+      },
+      "measured_at": "2026-01-03",
+      "tags": ["cache"],
+      "recipe": {
+        "summary": "Query L3 cache capacity",
+        "steps": [
+          {
+            "type": "command",
+            "run": "TODO: lscpu | grep -i 'L3'",
+            "expected": "L3 size reported"
+          }
+        ],
+        "notes": "Placeholder values until measured on hardware."
+      },
+      "source": {
+        "kind": "placeholder",
+        "reference": "",
+        "confidence": "placeholder"
+      }
+    }
+  ]
+}
