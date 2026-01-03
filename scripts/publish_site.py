@@ -52,6 +52,11 @@ def main() -> int:
         action="store_true",
         help="Skip syncing HTML into personal-website.",
     )
+    parser.add_argument(
+        "--preview",
+        action="store_true",
+        help="Serve dist/site with a local HTTP server (port 8000).",
+    )
     parser.add_argument("--dry-run", action="store_true", help="Print actions only.")
     args = parser.parse_args()
 
@@ -65,6 +70,13 @@ def main() -> int:
         site_root.parent.mkdir(parents=True, exist_ok=True)
         cmd = ["rsync", "-av", "--delete", f"{dist}/", f"{site_root}/"]
         _run(cmd, dry_run=args.dry_run)
+
+    if args.preview:
+        if args.dry_run:
+            print("DRY RUN: preview server would start at http://localhost:8000")
+        else:
+            print("Preview: http://localhost:8000")
+            subprocess.run(["python3", "-m", "http.server", "8000"], check=True, cwd=dist)
 
     print("Done.")
     return 0

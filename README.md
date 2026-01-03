@@ -16,5 +16,6 @@ Options:
 - `--dry-run`: print actions without copying
 - `--skip-site-sync`: build the dist output only
 - `--site-root <path>`: override the destination path
+- `--preview`: serve `dist/site` at `http://localhost:8000`
 
 The publish script builds `dist/site` and uses `rsync --delete` to sync into the destination folder.
